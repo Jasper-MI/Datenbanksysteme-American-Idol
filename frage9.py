@@ -21,35 +21,29 @@ except Exception as e:
 
 cursor = connection.cursor()
 
+# sql_queries
 
-# sql_query
-#Frage 6
-sql_query6 = """
+#Frage 9
+sql_query9 = """
 SELECT 
-    'Vorher' AS Zeitraum,
-    COUNT (*) AS anzahl_suchanfragen
+    CASE
+        WHEN "Inhalt" ILIKE '%scandal%' THEN 'scandal'
+        WHEN "Inhalt" ILIKE '%controversy%' THEN 'controversy'
+    END AS kategorie,
+    COUNT(*) AS anzahl
 FROM 
     suchanfragen
-WHERE
-    "Inhalt" ILKIKE '%Black Horse and the Cherry Tree%'
-    AND "Uhrzeit" < '2006-05-24'
-
-UNION ALL
-
-SELECT 
-    'Nachher' AS Zeitraum,
-    COUNT (*) AS anzahl_suchanfragen
-FROM 
-    suchanfragen
-WHERE
-    "Inhalt" ILKIKE '%Black Horse and the Cherry Tree%'
-    AND "Uhrzeit" >= '2006-05-24';
+WHERE 
+    "Inhalt" ILIKE '%american idol%' AND
+    ("Inhalt" ILIKE '%scandal%'
+    OR "Inhalt" ILIKE '%controversy%')
+GROUP BY 
+    kategorie
+ORDER BY 
+    anzahl DESC;
 """
 
-
-# plot
-
-cursor.execute(sql_query6)
+cursor.execute(sql_query9)
 
 result = cursor.fetchall()
 for row in result:
@@ -57,13 +51,12 @@ for row in result:
 
 kategorie, werte = zip(*result)
 
-plt.figure(figsize=(10, 6))
-plt.bar(kategorie, werte, color='skyblue')
-plt.xlabel('Geschlecht')
-plt.ylabel('Anzahl der Suchanfragen')
-plt.title('Geschelchterverteilung')
-plt.show()
 
+plt.pie(werte, labels=kategorie)
+#plt.xlabel('Uhrzeit')
+#plt.ylabel('Anzahl Suchanfragen')
+plt.title('Suche nach Skandale')
+plt.show()
 
 cursor.close()
 connection.close()

@@ -33,7 +33,6 @@ SELECT
         WHEN "Inhalt" ILIKE '%amerian idle%' THEN 'amerian idle'
         WHEN "Inhalt" ILIKE '%amerian idool%' THEN 'amerian idool'
         WHEN "Inhalt" ILIKE '%aqmericaqn idol%' THEN 'aqmericaqn idol'
-        WHEN "Inhalt" ILIKE '%a%m%e%r%i%a%n %i%d%o%l%' AND "Inhalt" NOT ILIKE '%american idol%' THEN 'andere Schreibweisen'
         ELSE 'Unbekannt'
     END AS kategorie,
     COUNT(*) AS anzahl
@@ -46,7 +45,6 @@ WHERE
     OR "Inhalt" ILIKE '%amerian idle%'
     OR "Inhalt" ILIKE '%amerian idool%'
     OR "Inhalt" ILIKE '%aqmericaqn idol%'
-    OR ("Inhalt" ILIKE '%a%m%e%r%i%a%n %i%d%o%l%' AND "Inhalt" NOT ILIKE '%american idol%')
 GROUP BY 
     kategorie
 ORDER BY 
