@@ -24,7 +24,7 @@ except Exception as e:
 #cursor erstellen um sql-statements auszuführen
 cur = conn.cursor()
 
-#Frage 1_1: Suchanfragen nach Uhrzeit
+#Frage 1_2: Suchanfragen nach Tag
 
 sql_query = """
 SELECT 
@@ -47,7 +47,7 @@ cur.execute(sql_query)
 result = cur.fetchall()
 #print(result)
 
-#2 listen erstellen, liste 1: Uhrzeiten, liste 2: anzahl suchanfragen
+#2 listen erstellen, liste 1: Tage, liste 2: anzahl suchanfragen
 tag, suchanfragen = zip(*result)
 #print(tag)
 #print(suchanfragen)
