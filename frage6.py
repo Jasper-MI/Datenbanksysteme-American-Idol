@@ -1,11 +1,11 @@
 import psycopg2
 import matplotlib.pyplot as plt
 
-DB_HOST = "db_host"
-DB_PORT = 1234
-DB_NAME = "db_name"
-DB_USER = "db_user"
-DB_PASS = "db_pass"
+host = "localhost"
+port = 5432
+name = "aol_data"
+user = "postgres"
+pwd = "password"
 
 try:
     connection = psycopg2.connect(
@@ -24,14 +24,16 @@ cursor = connection.cursor()
 
 # sql_query
 #Frage 6
-sql_query6 = """
+songtitel = "Levon"
+sql_query6 = f"""
 SELECT 
     'Vorher' AS Zeitraum,
     COUNT (*) AS anzahl_suchanfragen
 FROM 
     suchanfragen
 WHERE
-    "Inhalt" ILKIKE '%Black Horse and the Cherry Tree%'
+    -- Hier Songtitel austauschen
+    "Inhalt" ILIKE '%{songtitel}%'
     AND "Uhrzeit" < '2006-05-24'
 
 UNION ALL
@@ -42,7 +44,8 @@ SELECT
 FROM 
     suchanfragen
 WHERE
-    "Inhalt" ILKIKE '%Black Horse and the Cherry Tree%'
+    -- Hier Songtitel austauschen
+    "Inhalt" ILIKE '%{songtitel}%'
     AND "Uhrzeit" >= '2006-05-24';
 """
 
@@ -57,11 +60,12 @@ for row in result:
 
 kategorie, werte = zip(*result)
 
-plt.figure(figsize=(10, 6))
-plt.bar(kategorie, werte, color='skyblue')
-plt.xlabel('Geschlecht')
+
+plt.figure(figsize=(10, 6), facecolor='#f4f2f2')
+plt.bar(kategorie, werte, color='#ff6b4d')
+plt.xlabel(songtitel)
 plt.ylabel('Anzahl der Suchanfragen')
-plt.title('Geschelchterverteilung')
+plt.title('Vergleich der Suchanfragen vor und nach dem Auftritt von Songs')
 plt.show()
 
 
