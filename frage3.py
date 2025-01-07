@@ -53,6 +53,7 @@ user, suchanfragen = zip(*result)
 #print(suchanfragen)
 
 #Diagramme erstellen
+plt.figure(facecolor='#f4f2f2')
 plt.pie(suchanfragen, labels=user)
 plt.title('Suchanfragen nach User')
 plt.show()

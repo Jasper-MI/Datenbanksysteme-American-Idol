@@ -62,6 +62,7 @@ def beschriftung(pct):
     return str(absolut)
 
 #Diagramme erstellen
+plt.figure(facecolor='#f4f2f2')
 plt.pie(suchanfragen, labels=geschlecht, autopct=beschriftung)
 plt.title('Suchanfragen nach Geschlecht der Besetzung')
 plt.show()

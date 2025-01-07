@@ -59,6 +59,7 @@ spoiler, suchanfragen = zip(*result)
 #print(suchanfragen)
 
 #Diagramme erstellen
+plt.figure(facecolor='#f4f2f2')
 plt.bar(spoiler, suchanfragen, color='#ff6b4d')
 plt.xlabel('Tag')
 plt.ylabel('Anzahl Suchanfragen')

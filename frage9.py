@@ -67,6 +67,7 @@ def beschriftung(pct):
     return str(absolut)
 
 #Diagramme erstellen
+plt.figure(facecolor='#f4f2f2')
 plt.pie(suchanfragen, labels=skandal, autopct=beschriftung)
 plt.title('Skandale in American Idol')
 plt.show()

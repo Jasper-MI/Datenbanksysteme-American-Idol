@@ -66,6 +66,7 @@ schreibfehler, anzahl = zip(*result)
 #print(anzahl)
 
 #Diagramme erstellen
+plt.figure(facecolor='#f4f2f2')
 plt.pie(anzahl, labels=schreibfehler)
 plt.title('Suchanfragen zu American Idol mit Rechtschreibfehler')
 plt.show()
