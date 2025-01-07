@@ -1,11 +1,11 @@
 import psycopg2
 import matplotlib.pyplot as plt
 
-DB_HOST = "db_host"
-DB_PORT = 1234
-DB_NAME = "db_name"
-DB_USER = "db_user"
-DB_PASS = "db_pass"
+DB_HOST = "localhost"
+DB_PORT = 5432
+DB_NAME = "aol_data"
+DB_USER = "postgres"
+DB_PASS = "password"
 
 try:
     connection = psycopg2.connect(
