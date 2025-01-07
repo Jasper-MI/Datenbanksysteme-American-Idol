@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 #Datenbankattribute
 host = "localhost"
 port = 5432
-name = "aol_data"
+name = "******"
 user = "postgres"
-pwd = "password"
+pwd = "********"
 
 #connection zur DB herstellen
 try:
@@ -74,7 +74,7 @@ def beschriftung(pct):
 #Diagramme erstellen
 plt.figure(facecolor='#f4f2f2')
 plt.pie(suchanfragen, labels=spoiler, autopct=beschriftung)
-plt.title('Spoiler zu American Idol')
+plt.title('Wie wurde nach Spoilern zu American Idol gesucht?')
 plt.show()
 
 #Resourcen wieder schließen wenn fertig

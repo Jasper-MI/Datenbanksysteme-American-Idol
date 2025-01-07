@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 #Datenbankattribute
 host = "localhost"
 port = 5432
-name = "aol_data"
+name = "*****"
 user = "postgres"
-pwd = "password"
+pwd = "*******"
 
 #connection zur DB herstellen
 try:
@@ -63,8 +63,8 @@ show, suchanfragen = zip(*result)
 plt.figure(facecolor='#f4f2f2')
 plt.bar(show, suchanfragen, color="#ff6b4d")
 plt.xlabel('Shows')
-plt.ylabel('suchanfragen')
-plt.title('Suchanfragen nach User')
+plt.ylabel('Suchanfragen')
+plt.title('Suchanfragen nach vergleichbaren Shows')
 plt.show()
 
 #Resourcen wieder schließen wenn fertig
