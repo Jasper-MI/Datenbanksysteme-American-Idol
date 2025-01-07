@@ -3,25 +3,27 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-DB_HOST = "db_host"
-DB_PORT = 1234
-DB_NAME = "db_name"
-DB_USER = "db_user"
-DB_PASS = "db_pass"
+#Datenbankattribute
+host = "localhost"
+port = 5432
+name = "aol_data"
+user = "postgres"
+pwd = "password"
 
+#connection zur DB herstellen
 try:
-    connection = psycopg2.connect(
-        host = DB_HOST,
-        port = DB_PORT,
-        database = DB_NAME,
-        user = DB_USER,
-        password = DB_PASS
+    conn = psycopg2.connect(
+        host = host,
+        port = port,
+        database = name,
+        user = user,
+        password = pwd
     )
     print("Verbindung erfolgreich :)")
 except Exception as e:
-    print("Fehler beim Verbinden: ", e)
+    print("Fehler beim verbinden: ", e)
 
-cursor = connection.cursor()
+cursor = conn.cursor()
 
 
 # SQL-Abfrage
@@ -45,10 +47,10 @@ GROUP BY
 """
 
 # SQL-Abfrage ausführen
-cursor = connection.cursor()
+cursor = conn.cursor()
 cursor.execute(sql_query)
 result = cursor.fetchall()
-connection.close()
+conn.close()
 
 # Ergebnisse überprüfen
 print(result)  # Ausgabe in der Konsole: Liste von Tupeln [(song, vorher, nachher), ...]
@@ -95,3 +97,7 @@ add_labels(bars2)
 # Layout anpassen und Diagramm anzeigen
 plt.tight_layout()
 plt.show()
+
+#Resourcen wieder schließen wenn fertig
+cursor.close()
+conn.close()

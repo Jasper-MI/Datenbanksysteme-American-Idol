@@ -1,30 +1,32 @@
 import psycopg2
 import matplotlib.pyplot as plt
 
-DB_HOST = "db_host"
-DB_PORT = 1234
-DB_NAME = "db_name"
-DB_USER = "db_user"
-DB_PASS = "db_pass"
+#Datenbankattribute
+host = "localhost"
+port = 5432
+name = "aol_data"
+user = "postgres"
+pwd = "password"
 
+#connection zur DB herstellen
 try:
-    connection = psycopg2.connect(
-        host = DB_HOST,
-        port = DB_PORT,
-        database = DB_NAME,
-        user = DB_USER,
-        password = DB_PASS
+    conn = psycopg2.connect(
+        host = host,
+        port = port,
+        database = name,
+        user = user,
+        password = pwd
     )
     print("Verbindung erfolgreich :)")
 except Exception as e:
-    print("Fehler beim Verbinden: ", e)
+    print("Fehler beim verbinden: ", e)
 
-cursor = connection.cursor()
+#cursor erstellen um sql-statements auszuführen
+cur = conn.cursor()
 
-# sql_queries
+#Frage 7: Fragen zu technischen Kontext
 
-#Frage 8
-sql_query8 = """
+sql_query = """
 SELECT 
     CASE
         WHEN "Inhalt" ILIKE '%phone%' THEN 'phone'
@@ -66,20 +68,23 @@ ORDER BY
     anzahl DESC;
 """
 
-cursor.execute(sql_query8)
+#Query ausführen
+cur.execute(sql_query)
 
-result = cursor.fetchall()
-for row in result:
-    print(row)
+#Ergebnisse speichern
+result = cur.fetchall()
+#print(result)
 
-kategorie, werte = zip(*result)
+#2 listen erstellen, liste 1: fragewort, liste 2: anzahl suchanfragen
+frage, suchanfragen = zip(*result)
+#print(frage)
+#print(suchanfragen)
 
-
-plt.pie(werte, labels=kategorie)
-#plt.xlabel('Uhrzeit')
-#plt.ylabel('Anzahl Suchanfragen')
-plt.title('Häufige Rechtschreibfehler')
+#Diagramme erstellen
+plt.pie(suchanfragen, labels=frage)
+plt.title('Technische Fragen zu American Idol')
 plt.show()
 
-cursor.close()
-connection.close()
+#Resourcen wieder schließen wenn fertig
+cur.close()
+conn.close()
