@@ -1,30 +1,32 @@
 import psycopg2
 import matplotlib.pyplot as plt
 
-DB_HOST = "db_host"
-DB_PORT = 1234
-DB_NAME = "db_name"
-DB_USER = "db_user"
-DB_PASS = "db_pass"
+#Datenbankattribute
+host = "localhost"
+port = 5432
+name = "aol_data"
+user = "postgres"
+pwd = "password"
 
+#connection zur DB herstellen
 try:
-    connection = psycopg2.connect(
-        host = DB_HOST,
-        port = DB_PORT,
-        database = DB_NAME,
-        user = DB_USER,
-        password = DB_PASS
+    conn = psycopg2.connect(
+        host = host,
+        port = port,
+        database = name,
+        user = user,
+        password = pwd
     )
     print("Verbindung erfolgreich :)")
 except Exception as e:
-    print("Fehler beim Verbinden: ", e)
+    print("Fehler beim verbinden: ", e)
 
-cursor = connection.cursor()
+#cursor erstellen um sql-statements auszuführen
+cur = conn.cursor()
 
+#Frage 5: Zusammenhang Suchanfragen mit Geschlecht der Person
 
-# sql_query
-#Frage 5
-sql_query5 = """
+sql_query = """
 SELECT 
     besetzung."Geschlecht", 
     COUNT (*) AS anzahl_suchen
@@ -38,27 +40,32 @@ GROUP BY
     besetzung."Geschlecht";
 """
 
-# plot
-cursor.execute(sql_query5)
+#Query ausführen
+cur.execute(sql_query)
 
-result = cursor.fetchall()
-for row in result:
-    print(row)
+#Ergebnisse speichern
+result = cur.fetchall()
+#print(result)
 
-kategorie, werte = zip(*result)
+#2 listen erstellen, liste 1: User, liste 2: anzahl suchanfragen
+geschlecht, suchanfragen = zip(*result)
+#print(geschlecht)
+#print(suchanfragen)
 
-#plt.figure(figsize=(10, 6))
-#plt.bar(kategorie, werte, color='skyblue')
-#plt.xlabel('Geschlecht')
-#plt.ylabel('Anzahl der Suchanfragen')
-plt.title('Geschelchterverteilung')
-#plt.show()
+#Gesamte Anzahl der Suchanfragen um es im Pie Diagramm darzustellen
+total=sum(suchanfragen)
 
-werte = [row[1] for row in result]
-total = sum(werte)
-plt.pie(werte, labels=kategorie, autopct=lambda p: '{:.0f}'.format(p * total / 100))
+#pct kommt von 'autopct', funktion gibt die absoluten suchanfragen für die beschriftung zurück
+def beschriftung(pct):
+    absolut = int(round(pct * total / 100))
+    #rückgabe absolutwerte als string
+    return str(absolut)
+
+#Diagramme erstellen
+plt.pie(suchanfragen, labels=geschlecht, autopct=beschriftung)
+plt.title('Suchanfragen nach Geschlecht der Besetzung')
 plt.show()
 
-
-cursor.close()
-connection.close()
+#Resourcen wieder schließen wenn fertig
+cur.close()
+conn.close()

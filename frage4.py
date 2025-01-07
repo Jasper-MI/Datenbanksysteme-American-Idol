@@ -1,30 +1,32 @@
 import psycopg2
 import matplotlib.pyplot as plt
 
-DB_HOST = "db_host"
-DB_PORT = 1234
-DB_NAME = "db_name"
-DB_USER = "db_user"
-DB_PASS = "db_pass"
+#Datenbankattribute
+host = "localhost"
+port = 5432
+name = "aol_data"
+user = "postgres"
+pwd = "password"
 
+#connection zur DB herstellen
 try:
-    connection = psycopg2.connect(
-        host = DB_HOST,
-        port = DB_PORT,
-        database = DB_NAME,
-        user = DB_USER,
-        password = DB_PASS
+    conn = psycopg2.connect(
+        host = host,
+        port = port,
+        database = name,
+        user = user,
+        password = pwd
     )
     print("Verbindung erfolgreich :)")
 except Exception as e:
-    print("Fehler beim Verbinden: ", e)
+    print("Fehler beim verbinden: ", e)
 
-cursor = connection.cursor()
+#cursor erstellen um sql-statements auszuführen
+cur = conn.cursor()
 
+#Frage 4: Vergleiche mit anderen Shows
 
-# sql_query
-#Frage 4
-sql_query4 = """
+sql_query = """
 SELECT 
     shows."Titel", 
     COUNT(suchanfragen."SearchID") AS anzahl_suchen
@@ -45,21 +47,25 @@ GROUP BY
     shows."Titel";
 """
 
-# plot
+#Query ausführen
+cur.execute(sql_query)
 
-cursor.execute(sql_query4)
+#Ergebnisse speichern
+result = cur.fetchall()
+#print(result)
 
-result = cursor.fetchall()
-for row in result:
-    print(row)
+#2 listen erstellen, liste 1: User, liste 2: anzahl suchanfragen
+show, suchanfragen = zip(*result)
+#print(show)
+#print(suchanfragen)
 
-kategorie, werte = zip(*result)
-
-plt.bar(kategorie, werte, color='skyblue')
-plt.ylabel('Anzahl der Suchanfragen')
-plt.title('Vergleich mit "American Idol"')
+#Diagramme erstellen
+plt.bar(show, suchanfragen, color="#ff6b4d")
+plt.xlabel('Shows')
+plt.ylabel('suchanfragen')
+plt.title('Suchanfragen nach User')
 plt.show()
 
-
-cursor.close()
-connection.close()
+#Resourcen wieder schließen wenn fertig
+cur.close()
+conn.close()
