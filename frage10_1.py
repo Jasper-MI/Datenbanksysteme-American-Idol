@@ -57,9 +57,9 @@ cur.execute(sql_query)
 result = cur.fetchall()
 #print(result)
 
-#2 listen erstellen, liste 1: fragewort, liste 2: anzahl suchanfragen
+#2 listen erstellen, liste 1: spoiler-suchwort, liste 2: anzahl suchanfragen
 spoiler, suchanfragen = zip(*result)
-#print(skandal)
+#print(spoiler)
 #print(suchanfragen)
 
 #Gesamte Anzahl der Suchanfragen um es im Pie Diagramm darzustellen
