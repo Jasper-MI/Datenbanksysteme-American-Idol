@@ -47,7 +47,7 @@ cur.execute(sql_query)
 result = cur.fetchall()
 #print(result)
 
-#2 listen erstellen, liste 1: User, liste 2: anzahl suchanfragen
+#2 listen erstellen, liste 1: geschlecht, liste 2: anzahl suchanfragen
 geschlecht, suchanfragen = zip(*result)
 #print(geschlecht)
 #print(suchanfragen)
