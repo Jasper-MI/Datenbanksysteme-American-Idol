@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 #Datenbankattribute
 host = "localhost"
 port = 5432
-name = "*******"
+name = "aol_data"
 user = "postgres"
-pwd = "********"
+pwd = "password"
 
 #connection zur DB herstellen
 try:
