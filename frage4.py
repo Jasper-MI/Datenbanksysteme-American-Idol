@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 #Datenbankattribute
 host = "localhost"
 port = 5432
-name = "*****"
+name = "aol_data"
 user = "postgres"
-pwd = "*******"
+pwd = "password"
 
 #connection zur DB herstellen
 try:
@@ -54,7 +54,7 @@ cur.execute(sql_query)
 result = cur.fetchall()
 #print(result)
 
-#2 listen erstellen, liste 1: User, liste 2: anzahl suchanfragen
+#2 listen erstellen, liste 1: Show, liste 2: anzahl suchanfragen
 show, suchanfragen = zip(*result)
 #print(show)
 #print(suchanfragen)
