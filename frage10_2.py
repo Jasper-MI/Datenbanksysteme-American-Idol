@@ -55,7 +55,7 @@ result = cur.fetchall()
 
 #2 listen erstellen, liste 1: fragewort, liste 2: anzahl suchanfragen
 spoiler, suchanfragen = zip(*result)
-#print(skandal)
+#print(spoiler)
 #print(suchanfragen)
 
 #Diagramme erstellen
