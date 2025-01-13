@@ -28,7 +28,7 @@ cur = conn.cursor()
 
 sql_query = """
 SELECT 
-    DATE("Uhrzeit") AS hour_of_day, 
+    DATE("Uhrzeit") AS full_date, 
     COUNT(*) AS entry_count
 FROM 
     suchanfragen
