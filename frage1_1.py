@@ -37,8 +37,7 @@ WHERE
 GROUP BY 
     EXTRACT(HOUR FROM "Uhrzeit")
 ORDER BY 
-    entry_count DESC
-LIMIT 100;
+    entry_count DESC;
 """
 
 #Query ausführen
